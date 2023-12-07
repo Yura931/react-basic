@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="root"></div> 
+</body>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel"> // babel cdn 후 script type = text/babel로 변경
+    // react html을 직접 작성하지 않는다.
+    // js, React Js를 통해 작성
+    // addEventListener를 반복하는 대신에 property에 event를 등록하는 방식식
+    const root = document.getElementById("root");
+    const h3 = React.createElement("h3", {
+        id: "title", 
+        style: {color: 'red'},
+        onMouseEnter: () => console.log("mouse enter"), // props 안에 eventListener를 넣을 수 있다는 것
+    }, "무슨 내용을 넣을까?"); // React.createElement(html 태그, property, arguments)
+
+    const btn = React.createElement("button", {
+        style: {
+            backgroundColor: 'tomato'
+        },
+        onClick: () => console.log('im click'), // event listener도 지정 가능
+    }, "Click me");
+
+
+    // JSX - Babel이  JSX로 적은 코드를 브라우저가 이해할 수 있는 형태로 바꿔줌
+    // 변경후 head에 script로 담아 줌
+    const Title = () => (
+        <h3 
+        id="title" 
+        onMouseEenter={() => console.log("mouse enter")}>
+            Hello I'm a title
+        </h3>
+    );
+    // JSX 함수화를 통한 컴포넌트
+    const Button = () => (
+        <button style={{
+            backgroundColor: "tomato",
+        }}
+        onClick={() => console.log("Click")}
+        >
+            Click me
+        </button>
+    )
+    const container = React.createElement("div", null, [Title, Button]);
+    const Container = () =>
+    // 컴포넌트들이 합쳐진 구성
+    // 컴포넌트의 첫글자는 무조건 대문자, 소문자인 경우 HTML 태그로 인식
+        <div>
+            <Title />
+            <Button />
+        </div>
+    // React Dom - React Element를 HTML로 변경 하는 것
+    ReactDOM.render(<Container />, root);
+</script>
+</html>
