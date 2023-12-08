@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div id="root"></div> 
+</body>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const SaveBtn = () => {
+        return (
+            <button
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+            }}
+            >Save Changes</button>
+        )
+    }
+
+    const ConfirmBtn = () => {
+        return (
+            <button
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+            }}
+            >Confirm</button>
+        )
+    }
+
+    // 첫번째 인자로 부모로부터 받은 props 객체를 받음
+    // 객체의 키 값만 {} 안에 세팅 해주면 가져올 수 있음
+    const Btn = ({text, changeValue}) => {
+        console.log(text, "was rendered");
+        return (
+            <button
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+            }}
+            onClick={changeValue}
+            >{text}</button>
+        )
+    }
+
+    const MemorizedBtn = React.memo(Btn);   
+    // 부모컴포넌트의 상태가 변경되면 자식 컴포넌트는 무조건 re-rendering되는데 모든 자식컴포넌트가 렌더링 되는 것이 아닌 memo를 통해 정말 변경되는 컴포넌트만 렌더링 되도록 함
+    const App = () => {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
+        return (
+            <div>
+                <MemorizedBtn text={value} changeValue={changeValue} /> {/* 커스텀 컴포넌트 안에 넣은 것은 이벤트리스너가 아닌 하나의 Prop 이름  */}
+                <MemorizedBtn text="Confirm" />  {/*prop이 변경되지 안흔 한에서 이 컴포넌트를 다시 그릴지 말지 결정할 수 있음 Memo 사용*/}
+            </div>
+        )
+    }
+
+    ReactDOM.render(<App />, root);
+</script>
+</html>

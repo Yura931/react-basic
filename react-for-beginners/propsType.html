@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div id="root"></div> 
+</body>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    
+    const Btn = ({text, fontSize = 10 }) => { // prop의 기본값 설정 가능
+        return (
+            <button
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+                fontSize
+            }}
+            >{text}</button>
+        )
+    }
+    // 어떤 타입의 prop을 받는지 체크 할 수 있음
+    // console의 wraning을 받을 수 있음
+    Btn.propTypes = {
+        text: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    }
+    const App = () => {
+        return (
+            <div>
+                <Btn text="Save Changes" fontSize={18} /> 
+                <Btn text="Confirm" />  
+            </div>
+        )
+    }
+
+    ReactDOM.render(<App />, root);
+</script>
+</html>
